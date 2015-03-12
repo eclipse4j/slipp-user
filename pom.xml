@@ -197,6 +197,32 @@
 			<version>1.9.5</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<!-- any indy version of Groovy \>= 2.0.0-beta-3 should work here -->
+			<version>2.4.1</version>
+			<classifier>indy</classifier>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.gmavenplus</groupId>
+			<artifactId>gmavenplus-plugin</artifactId>
+			<version>1.4</version>
+
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>org.spockframework</groupId>
+			<artifactId>spock-maven</artifactId>
+			<version>0.7-groovy-2.0</version>
+		</dependency>
+
+
+
 	</dependencies>
 	<reporting>
 		<plugins>
@@ -374,6 +400,51 @@
 						<path>/</path>
 					</configuration>
 				</plugin>
+
+				<plugin>
+					<groupId>org.codehaus.gmavenplus</groupId>
+					<artifactId>gmavenplus-plugin</artifactId>
+					<version>1.4</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>compile</goal>
+								<goal>testCompile</goal>
+							</goals>
+						</execution>
+						<execution>
+							<phase>site</phase>
+							<goals>
+								<goal>generateStubs</goal>
+								<goal>testGenerateStubs</goal>
+								<goal>groovydoc</goal>
+								<goal>testGroovydoc</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<invokeDynamic>true</invokeDynamic>
+						<sources>
+							<!-- here /src/main/groovy -->
+							<source>
+								<directory>%{project.basedir}/src/main/groovy</directory>
+								<includes>
+									<include>**/*.groovy</include>
+								</includes>
+							</source>
+						</sources>
+						<testSources>
+							<testSource>
+								<directory>${project.basedir}/src/test/groovy</directory>
+									<includes>
+										<include>**/*.groovy</include>
+									</includes>
+							</testSource>
+						</testSources>
+
+					</configuration>
+				</plugin>
+
 			</plugins>
 		</pluginManagement>
 	</build>
